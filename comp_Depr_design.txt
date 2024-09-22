@@ -1,0 +1,53 @@
+START
+
+1. DEFINE constants for buffer size (e.g., 128KB buffer)
+
+2. FUNCTION compress_file(input_file_path, output_file_path)
+   - ACQUIRE a lock using mutex to prevent race conditions on file operations
+   - OPEN the input file in binary mode
+     IF input file fails to open
+        RETURN an error
+   - OPEN the output compressed file in binary mode
+     IF output file fails to open
+        RETURN an error
+   - INITIALIZE Zlib compression stream
+   - WHILE there is data left in the input file
+     - READ data into a buffer from the input file
+     - COMPRESS the buffer using Zlib
+     - WRITE compressed data to the output file
+   - CLOSE both files
+   - RELEASE the lock (mutex)
+   - PRINT "Compression Completed"
+   - END FUNCTION
+
+3. FUNCTION decompress_file(input_compressed_file, output_decompressed_file)
+   - ACQUIRE a lock using mutex to prevent race conditions on file operations
+   - OPEN the compressed file in binary mode
+     IF compressed file fails to open
+        RETURN an error
+   - OPEN the output decompressed file in binary mode
+     IF decompressed file fails to open
+        RETURN an error
+   - INITIALIZE Zlib decompression stream
+   - WHILE there is compressed data left in the input file
+     - READ compressed data into a buffer
+     - DECOMPRESS the data
+     - WRITE decompressed data to the output file
+   - CLOSE both files
+   - RELEASE the lock (mutex)
+   - PRINT "Decompression Completed"
+   - END FUNCTION
+
+4. FUNCTION main()
+   - DEFINE paths for the input file, compressed file, and decompressed file
+   - RECORD the start time using chrono
+   - LAUNCH compress_file in a separate thread
+   - WAIT for the compression thread to complete
+   - RECORD the compression time
+   - LAUNCH decompress_file in a separate thread
+   - WAIT for the decompression thread to complete
+   - RECORD the decompression time
+   - PRINT compression and decompression times
+   - END FUNCTION
+
+END
