@@ -1,0 +1,71 @@
+START
+
+1. FUNCTION compress_file(input_file_path, output_compressed_file_path)
+   - ACQUIRE a lock using mutex
+   - OPEN the input log file in binary mode
+   - OPEN the output compressed file in binary mode
+   - INITIALIZE Zlib compression stream
+   - READ data from the input log file in chunks
+   - COMPRESS the data chunk and write it to the compressed file
+   - CLOSE both files
+   - RELEASE the lock (mutex)
+   - PRINT "Compression Completed"
+   - END FUNCTION
+
+2. FUNCTION encrypt_file(input_compressed_file, output_encrypted_file, encryption_key)
+   - ACQUIRE a lock using mutex
+   - OPEN the compressed file in binary mode
+   - OPEN the output encrypted file in binary mode
+   - INITIALIZE AES encryption context using the provided key
+   - GENERATE an Initialization Vector (IV) for AES encryption
+   - WRITE IV to the output file for decryption purposes later
+   - READ compressed data in chunks from the input file
+   - ENCRYPT the data chunk using AES and write the encrypted data to the output file
+   - CLOSE both files
+   - RELEASE the lock (mutex)
+   - PRINT "Encryption Completed"
+   - END FUNCTION
+
+3. FUNCTION decrypt_file(input_encrypted_file, output_decrypted_file, decryption_key)
+   - ACQUIRE a lock using mutex
+   - OPEN the encrypted file in binary mode
+   - OPEN the output decrypted file in binary mode
+   - INITIALIZE AES decryption context using the provided key
+   - READ IV from the encrypted file (stored at the beginning during encryption)
+   - READ encrypted data in chunks
+   - DECRYPT each chunk using AES and write the decrypted data to the output file
+   - CLOSE both files
+   - RELEASE the lock (mutex)
+   - PRINT "Decryption Completed"
+   - END FUNCTION
+
+4. FUNCTION decompress_file(input_compressed_file, output_decompressed_file)
+   - ACQUIRE a lock using mutex
+   - OPEN the compressed file in binary mode
+   - OPEN the output decompressed file in binary mode
+   - INITIALIZE Zlib decompression stream
+   - READ compressed data from the input file
+   - DECOMPRESS the data chunk and write it to the output file
+   - CLOSE both files
+   - RELEASE the lock (mutex)
+   - PRINT "Decompression Completed"
+   - END FUNCTION
+
+5. FUNCTION main()
+   - DEFINE paths for the log file, compressed file, encrypted file, decrypted file, and decompressed file
+   - DEFINE encryption key for AES (ensure key is kept secure)
+   - RECORD the start time using chrono
+   - LAUNCH compress_file in a separate thread
+   - WAIT for the compression thread to complete
+   - LAUNCH encrypt_file in a separate thread
+   - WAIT for the encryption thread to complete
+   - RECORD the encryption time
+   - LAUNCH decrypt_file in a separate thread
+   - WAIT for the decryption thread to complete
+   - RECORD the decryption time
+   - LAUNCH decompress_file in a separate thread
+   - WAIT for the decompression thread to complete
+   - PRINT total time taken for compression, encryption, decryption, and decompression
+   - END FUNCTION
+
+END
