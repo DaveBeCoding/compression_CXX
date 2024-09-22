@@ -1,0 +1,67 @@
+README: File Compression and Decompression in C++
+
+Project Overview
+
+This project demonstrates file compression and decompression using Zlib in C++. It also introduces the concept of lossless and lossy compression, explains the mathematics behind the compression algorithms, and provides practical use cases. This project is especially valuable for professionals in cybersecurity, embedded systems, network engineering, and information security.
+
+The program compresses a given file using Zlib (lossless compression) and decompresses it to ensure data integrity. The project further illustrates how multithreading can optimize file compression processes by distributing tasks across multiple cores.
+
+Key Concepts
+
+1. Lossless vs. Lossy Compression
+
+	•	Lossless Compression: Data is compressed without any loss in quality or information. This is critical for use cases where data integrity is essential, such as encrypted files, system logs, or software binaries.
+	•	Example algorithms: Zlib (Deflate), Gzip, LZ77.
+	•	Mathematics of Lossless Compression: The idea is to find redundancy in the data and remove it, reducing the data size without losing any information. Mathematically, if x is the original data, and y is the compressed data:
+
+f(y) = x \quad \text{(Decompressed data should equal the original data)}
+
+The compression ratio R can be expressed as:
+
+R = \frac{\text{Original Size}}{\text{Compressed Size}}
+
+	•	Lossy Compression: Some data is discarded in exchange for a much smaller file size. This is not suitable for critical data like system logs or encrypted files but is commonly used in multimedia.
+	•	Example algorithms: JPEG, MP3, MPEG.
+	•	Mathematics of Lossy Compression: Lossy compression reduces file size by removing less important data. If x is the original data and y is the compressed data:
+
+f(y) \approx x \quad \text{(Decompressed data is an approximation of original data)}
+
+Lossy compression typically results in a higher compression ratio compared to lossless methods.
+
+2. Compression in C++ (Zlib)
+
+	•	Zlib is a widely used lossless compression library. It uses the Deflate algorithm (a combination of LZ77 and Huffman coding) to compress data efficiently.
+	•	Summation of Compressed Data:
+
+\text{Compressed Size} = \sum_{i=1}^{n} \text{Symbol Size}(i) \times \text{Probability}(i)
+
+where n is the number of unique symbols in the data.
+
+
+1.	Compression Algorithm (Zlib):
+Zlib works by finding repeating sequences of bytes and replacing them with references to earlier occurrences of the sequence. This is a combination of LZ77 and Huffman coding.
+	•	LZ77 searches for long repeating patterns within a sliding window and replaces the patterns with shorter backreferences.
+	•	Huffman coding further compresses the data by assigning shorter codes to frequently occurring symbols.
+Compression Ratio Formula:
+
+R = \frac{\text{Size of Original File}}{\text{Size of Compressed File}}
+
+	2.	Multithreading Enhancement:
+By compressing and decompressing data using multiple threads, we can divide the data into chunks and process them concurrently. This is especially useful when dealing with large files in high-performance applications like network engineering or embedded systems.
+	3.	Performance Optimization with Mutexes:
+To avoid race conditions when multiple threads access files or shared memory, mutexes are used to ensure that only one thread modifies shared data at a time.
+	4.	Using Chrono for Timing:
+We use the chrono library to measure the time taken for compression and decompression:
+
+```c++
+
+auto start = std::chrono::high_resolution_clock::now();
+// Perform compression
+auto end = std::chrono::high_resolution_clock::now();
+std::chrono::duration<double> elapsed = end - start;
+std::cout << "Compression took: " << elapsed.count() << " seconds.\n";
+
+
+```
+
+
