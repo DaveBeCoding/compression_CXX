@@ -1,0 +1,27 @@
+# Ignore common C/C++ files and directories
+*.o
+*.obj
+*.exe
+*.so
+*.dll
+*.lib
+*.a
+*.out
+*.log
+cmake*
+CMakeLists.txt
+build/
+src/main.cpp~
+src/*.cpp~
+src/*.hpp~
+tests/src/*.cpp~
+tests/src/*.hpp~
+tests/tests.cpp~
+
+# Ignore files and directories that start with "not" or "notes"
+*not*
+*notes*
+
+# Ignore everything in the build directory
+/build/
+
